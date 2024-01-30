@@ -13,6 +13,7 @@ const gAudioRights = [new Audio('sound/right1.mp3'), new Audio('sound/right2.mp3
 const gAudioWrong = new Audio('sound/wrong.mp3')
 const gAudioWin = new Audio('sound/win.mp3')
 const gAudioCheer = new Audio('sound/cheer.mp3')
+const gAudioBreak = new Audio('sound/broken.mp3')
 const gAudioBgs = [new Audio('sound/bg1.mp3'), new Audio('sound/bg2.mp3'), new Audio('sound/bg3.mp3')]
 gAudioBgs.forEach(a => a.loop = true)
 
@@ -112,8 +113,6 @@ function onTdClicked(elCell, x, y) {
     elModal.querySelector('button').dataset.mult = x * y
     elModal.classList.add('show')
     elModal.showModal()
-
-    // const ans = +prompt(`${x} * ${y} =`)
 }
 
 function onAns() {
@@ -130,6 +129,9 @@ function onAns() {
     } else {
         gAudioWrong.play()
         highlightEl(gElSelectedCell, 'wrong')
+        setTimeout(()=>{
+            breakScreen()
+        }, 1000)
     }
     gElSelectedCell = null
     elModal.classList.remove('show')
@@ -181,4 +183,14 @@ function saveProgress(ans) {
         solved.push(ans)
         localStorage.solved = JSON.stringify(solved)
     }
+}
+
+function breakScreen() {
+    gAudioBreak.play()
+    const el = document.querySelector('.broken')
+    el.style.display = 'block'
+    setTimeout(()=>{
+        el.style.display = 'none'
+    }, 2500) 
+    
 }
