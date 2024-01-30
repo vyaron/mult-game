@@ -84,17 +84,19 @@ function onThClicked(elCell, i, j) {
     }
 
     els = els.slice(0, els.length / 2)
-
+    var openedElsCount = 0
     els.forEach(el => {
         if (el.classList.contains('solved')) return
         el.classList.add('solved')
         el.innerHTML = (+el.dataset.i + 1) * (+el.dataset.j + 1)
         gSolvedCount++
+        openedElsCount++
     })
-    gAudioCheer.play()
-
     elCell.classList.add('solved')
-    checkGameOver()
+    if (openedElsCount) {
+        gAudioCheer.play()
+        checkGameOver()
+    }
 }
 
 function onTdClicked(elCell, x, y) {
