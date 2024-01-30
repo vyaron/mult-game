@@ -1,16 +1,18 @@
 'use strict'
 
-var gSize = 4
+var gSize = +localStorage.multSize || 4
 var gIsStarted
 var gSolvedCount
 var gElSelectedCell
 var gCandyInterval
+var gAudioBg
 
-const gAudioRight = new Audio('sound/right.mp3')
+const gAudioRights = [new Audio('sound/right1.mp3'), new Audio('sound/right2.mp3'), new Audio('sound/right3.mp3')]
+
 const gAudioWrong = new Audio('sound/wrong.mp3')
 const gAudioWin = new Audio('sound/win.mp3')
 const gAudioCheer = new Audio('sound/cheer.mp3')
-const gAudioBg = new Audio('sound/bg.mp3')
+const gAudioBgs = [new Audio('sound/bg1.mp3'), new Audio('sound/bg2.mp3'), new Audio('sound/bg3.mp3')]
 
 function onInit() {
     gSolvedCount = 0
@@ -66,6 +68,8 @@ function onThClicked(elCell, i, j) {
             [...document.querySelectorAll(`td[data-i="${i}"]`)]
     }
 
+    els = els.slice(0, els.length/2)
+
     els.forEach(el => {
         if (el.classList.contains('solved')) return
         el.classList.add('solved')
@@ -83,6 +87,7 @@ function onTdClicked(elCell, x, y) {
 
     if (!gIsStarted) {
         gIsStarted = true
+        gAudioBg = gAudioBgs[getRandomInt(0, gAudioBgs.length)]
         gAudioBg.play()
     }
 
@@ -103,7 +108,7 @@ function onAns() {
     const mult = elModal.querySelector('button').dataset.mult
 
     if (ans === mult) {
-        gAudioRight.play()
+        gAudioRights[getRandomInt(0, gAudioRights.length)].play()
         gElSelectedCell.classList.add('solved')
         gElSelectedCell.innerHTML = ans
         gSolvedCount++
@@ -134,10 +139,11 @@ function getRandomInt(min, max) {
 
 function checkGameOver() {
     if (gSolvedCount === (gSize - 1) * (gSize - 1)) {
-        gAudioWin.play()
         gAudioBg.pause()
+        gAudioWin.play()
         clearInterval(gCandyInterval)
         gSize++
+        localStorage.multSize = gSize
         onInit()
         return true
     }
