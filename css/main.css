@@ -1,0 +1,94 @@
+
+body {
+    text-align: center;
+    background-color: #111;
+    color: whitesmoke;
+    font-family: cursive;
+    user-select: none;
+}
+
+table {
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.mult-table {
+    /* background-image: url('../img/4.jpg'); */
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 5px;
+    width: 50px;
+    height: 50px;
+    transition: .5s;
+}
+
+th {
+    background-color: rgba(1, 1, 1, 0.8);
+    color: gold
+}
+
+td {
+    cursor: pointer;
+    background-color: white;
+}
+
+tbody > tr:first-child > th:first-child {
+    cursor: not-allowed;
+}
+
+.solved {
+    background-color: rgba(1, 1, 1, 0.4 );
+    color: yellowgreen;
+}
+.wrong {
+    background-color: rgb(230, 90, 90);
+}
+
+.highlight {
+    background-color: tomato;
+    color: white;
+}
+
+.candy {
+    background-image: url('../img/candy.png');
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+}
+
+
+dialog {
+    border: 1px solid gray;
+    border-radius: .3em;
+}
+dialog h2 {
+    font-size: 2em;
+    color: magenta
+}
+
+dialog input {
+    font-size: 1.3em;
+    max-width: 50px;
+    color: magenta;
+    font-size: bold;
+    transition: .8s;
+}
+dialog input:focus  {
+    background-color: lightcoral;
+}
+
+::backdrop {
+    background-image: linear-gradient(
+      45deg,
+      magenta,
+      rebeccapurple,
+      dodgerblue,
+      green
+    );
+    opacity: 0.75;
+  }
