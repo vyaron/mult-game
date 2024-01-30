@@ -6,6 +6,7 @@ var gSolvedCount
 var gElSelectedCell
 var gCandyInterval
 var gAudioBg
+const gSolved = JSON.parse(localStorage.solved || '[]')
 
 const gAudioRights = [new Audio('sound/right1.mp3'), new Audio('sound/right2.mp3'), new Audio('sound/right3.mp3')]
 
@@ -13,9 +14,11 @@ const gAudioWrong = new Audio('sound/wrong.mp3')
 const gAudioWin = new Audio('sound/win.mp3')
 const gAudioCheer = new Audio('sound/cheer.mp3')
 const gAudioBgs = [new Audio('sound/bg1.mp3'), new Audio('sound/bg2.mp3'), new Audio('sound/bg3.mp3')]
+gAudioBgs.forEach(a => a.loop = true)
+
 
 function onInit() {
-    gSolvedCount = 0
+    gSolvedCount = gSolved.length
     gIsStarted = false
 
     renderTable()
@@ -42,10 +45,21 @@ function renderTable() {
         for (var j = 0; j < gSize; j++) {
             const num = (i + 1) * (j + 1)
 
+            var className = ''
+            var tdContent = ''
+
+            
+
             if (!i || !j) {
                 strHTML += `<th data-i="${i}" data-j="${j}" onclick="onThClicked(this, ${i}, ${j})"  >${num}</th>`
             } else {
-                strHTML += `<td data-diagonal="${i === j}" data-i="${i}" data-j="${j}" onclick="onTdClicked(this, ${i + 1}, ${j + 1})"></td>`
+                const idx = gSolved.indexOf('' + num)
+                if (idx >= 0) {
+                    gSolved.splice(idx, 1)
+                    className = 'solved'
+                    tdContent = num
+                }                
+                strHTML += `<td class="${className}" data-diagonal="${i === j}" data-i="${i}" data-j="${j}" onclick="onTdClicked(this, ${i + 1}, ${j + 1})">${tdContent}</td>`
             }
         }
         strHTML += '</tr>'
@@ -68,7 +82,7 @@ function onThClicked(elCell, i, j) {
             [...document.querySelectorAll(`td[data-i="${i}"]`)]
     }
 
-    els = els.slice(0, els.length/2)
+    els = els.slice(0, els.length / 2)
 
     els.forEach(el => {
         if (el.classList.contains('solved')) return
@@ -88,7 +102,7 @@ function onTdClicked(elCell, x, y) {
     if (!gIsStarted) {
         gIsStarted = true
         gAudioBg = gAudioBgs[getRandomInt(0, gAudioBgs.length)]
-        gAudioBg.play()
+        // gAudioBg.play()
     }
 
     gElSelectedCell = elCell
@@ -111,8 +125,8 @@ function onAns() {
         gAudioRights[getRandomInt(0, gAudioRights.length)].play()
         gElSelectedCell.classList.add('solved')
         gElSelectedCell.innerHTML = ans
-        gSolvedCount++
-        checkGameOver()
+        saveProgress(ans)
+
     } else {
         gAudioWrong.play()
         highlightEl(gElSelectedCell, 'wrong')
@@ -124,6 +138,8 @@ function onAns() {
 
 function onRestart() {
     localStorage.multSize = gSize = 4
+    gSolved = []
+    localStorage.solved = '[]'
     onInit()
 }
 
@@ -153,4 +169,16 @@ function checkGameOver() {
         return true
     }
     return false
+}
+
+function saveProgress(ans) {
+    gSolvedCount++
+    const isOver = checkGameOver()
+    if (isOver) {
+        localStorage.solved = '[]'
+    } else {
+        const solved = JSON.parse(localStorage.solved || '[]')
+        solved.push(ans)
+        localStorage.solved = JSON.stringify(solved)
+    }
 }
