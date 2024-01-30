@@ -122,6 +122,11 @@ function onAns() {
     elModal.close()
 }
 
+function onRestart() {
+    localStorage.multSize = gSize = 4
+    onInit()
+}
+
 function highlightEl(el, className = 'highlight') {
     el.classList.add(className)
     setTimeout(() => {
