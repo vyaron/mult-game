@@ -54,7 +54,6 @@ function renderTable() {
 }
 
 function onThClicked(elCell, i, j) {
-    // debugger
     if (!elCell.classList.contains('candy')) return
     elCell.classList.remove('candy')
 
@@ -84,7 +83,7 @@ function onTdClicked(elCell, x, y) {
 
     if (!gIsStarted) {
         gIsStarted = true
-        // gAudioBg.play()
+        gAudioBg.play()
     }
 
     gElSelectedCell = elCell
@@ -143,5 +142,4 @@ function checkGameOver() {
         return true
     }
     return false
-
 }
