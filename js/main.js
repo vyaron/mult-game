@@ -102,7 +102,7 @@ function onTdClicked(elCell, x, y) {
     if (!gIsStarted) {
         gIsStarted = true
         gAudioBg = gAudioBgs[getRandomInt(0, gAudioBgs.length)]
-        // gAudioBg.play()
+        gAudioBg.play()
     }
 
     gElSelectedCell = elCell
