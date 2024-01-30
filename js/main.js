@@ -10,7 +10,7 @@ const gAudioRight = new Audio('sound/right.mp3')
 const gAudioWrong = new Audio('sound/wrong.mp3')
 const gAudioWin = new Audio('sound/win.mp3')
 const gAudioCheer = new Audio('sound/cheer.mp3')
-const gAudioBg = new Audio('sound/bg.ogg')
+const gAudioBg = new Audio('sound/bg.mp3')
 
 function onInit() {
     gSolvedCount = 0
