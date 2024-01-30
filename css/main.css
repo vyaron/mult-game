@@ -103,7 +103,7 @@ footer {
     cursor: crosshair;
 }
 
-.broken {
+.broken, .explode {
     display: none;
     width: 400px;
     margin: auto;

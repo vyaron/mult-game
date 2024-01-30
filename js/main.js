@@ -14,6 +14,7 @@ const gAudioWrong = new Audio('sound/wrong.mp3')
 const gAudioWin = new Audio('sound/win.mp3')
 const gAudioCheer = new Audio('sound/cheer.mp3')
 const gAudioBreak = new Audio('sound/broken.mp3')
+const gAudioExplode = new Audio('sound/explode.mp3')
 const gAudioBgs = [new Audio('sound/bg1.mp3'), new Audio('sound/bg2.mp3'), new Audio('sound/bg3.mp3')]
 gAudioBgs.forEach(a => a.loop = true)
 
@@ -169,7 +170,11 @@ function checkGameOver() {
         clearInterval(gCandyInterval)
         gSize++
         localStorage.multSize = gSize
-        onInit()
+        setTimeout(()=>{
+            explodeScreen()
+            setTimeout(onInit, 1000)
+        }, 2500)
+        
         return true
     }
     return false
@@ -190,6 +195,15 @@ function saveProgress(ans) {
 function breakScreen() {
     gAudioBreak.play()
     const el = document.querySelector('.broken')
+    el.style.display = 'block'
+    setTimeout(()=>{
+        el.style.display = 'none'
+    }, 2500) 
+    
+}
+function explodeScreen() {
+    gAudioExplode.play()
+    const el = document.querySelector('.explode')
     el.style.display = 'block'
     setTimeout(()=>{
         el.style.display = 'none'
