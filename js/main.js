@@ -6,7 +6,7 @@ var gSolvedCount
 var gElSelectedCell
 var gCandyInterval
 var gAudioBg
-const gSolved = JSON.parse(localStorage.solved || '[]')
+var gSolved = JSON.parse(localStorage.solved || '[]')
 
 const gAudioRights = [new Audio('sound/right1.mp3'), new Audio('sound/right2.mp3'), new Audio('sound/right3.mp3')]
 
