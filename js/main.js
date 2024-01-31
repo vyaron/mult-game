@@ -84,7 +84,7 @@ function onThClicked(elCell, i, j) {
             [...document.querySelectorAll(`td[data-i="${i}"]`)]
     }
 
-    els = els.slice(0, els.length / 2)
+    els = els.slice(0, Math.ceil(els.length / 2))
     var openedElsCount = 0
     els.forEach(el => {
         if (el.classList.contains('solved')) return
@@ -142,9 +142,9 @@ function onAns() {
 }
 
 function onRestart() {
-    localStorage.multSize = gSize = 4
+    localStorage.clear()
+    gSize = 4
     gSolved = []
-    localStorage.solved = '[]'
     onInit()
 }
 
