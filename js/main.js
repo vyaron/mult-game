@@ -25,6 +25,7 @@ function onInit() {
 
     renderTable()
     if (gSize > 6) {
+        if (gCandyInterval) clearInterval(gCandyInterval)
         gCandyInterval = setInterval(placeCandy, 7000)
     }
 }
@@ -49,11 +50,10 @@ function renderTable() {
 
             var className = ''
             var tdContent = ''
-
-            
+            const cellWidth = 'auto' // 100 / gSize
 
             if (!i || !j) {
-                strHTML += `<th data-i="${i}" data-j="${j}" onclick="onThClicked(this, ${i}, ${j})"  >${num}</th>`
+                strHTML += `<th style="width:${cellWidth}%" data-i="${i}" data-j="${j}" onclick="onThClicked(this, ${i}, ${j})"  ><div>${num}<div></th>`
             } else {
                 const idx = gSolved.indexOf('' + num)
                 if (idx >= 0) {
@@ -61,7 +61,7 @@ function renderTable() {
                     className = 'solved'
                     tdContent = num
                 }                
-                strHTML += `<td class="${className}" data-diagonal="${i === j}" data-i="${i}" data-j="${j}" onclick="onTdClicked(this, ${i + 1}, ${j + 1})">${tdContent}</td>`
+                strHTML += `<td  style="width:${cellWidth}%" class="${className}" data-diagonal="${i === j}" data-i="${i}" data-j="${j}" onclick="onTdClicked(this, ${i + 1}, ${j + 1})"><div>${tdContent}</div></td>`
             }
         }
         strHTML += '</tr>'
@@ -209,4 +209,10 @@ function explodeScreen() {
         el.style.display = 'none'
     }, 2500) 
     
+}
+
+function onSelectLevel(val) {
+    gSize = val
+    gSolved = []
+    onInit()
 }
