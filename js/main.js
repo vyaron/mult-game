@@ -199,8 +199,8 @@ function breakScreen() {
     setTimeout(()=>{
         el.style.display = 'none'
     }, 2500) 
-    
 }
+
 function explodeScreen() {
     gAudioExplode.play()
     const el = document.querySelector('.explode')
