@@ -18,13 +18,13 @@ th {
 }
 
 th {
-    /* background-color: rgba(1, 1, 1, 0.8); */
+    background-color: rgba(1, 1, 1, 0.8);
     color: gold
 }
 
 td {
     cursor: pointer;
-    /* background-color: white; */
+    background-color: rgba(162, 94, 11, 0.98);
 }
 
 .solved {
