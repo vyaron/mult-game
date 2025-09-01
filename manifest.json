@@ -1,0 +1,22 @@
+{
+  "name": "אלופי הכפל",
+  "short_name": "כפל",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#111",
+  "theme_color": "#ffb347",
+  "description": "משחק תרגול לוח הכפל לילדים",
+  "icons": [
+    {
+      "src": "img/candy.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/candy.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "landscape"
+}
