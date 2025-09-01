@@ -28,7 +28,12 @@ function onInit() {
         if (gCandyInterval) clearInterval(gCandyInterval)
         gCandyInterval = setInterval(placeCandy, 7000)
     }
+
+    hideSplash()
+
 }
+
+
 
 function placeCandy() {
     const els = [...document.querySelectorAll('th:not(.solved)')]
@@ -60,14 +65,14 @@ function renderTable() {
                     gSolved.splice(idx, 1)
                     className = 'solved'
                     tdContent = num
-                }                
+                }
                 strHTML += `<td  style="width:${cellWidth}%" class="${className}" data-diagonal="${i === j}" data-i="${i}" data-j="${j}" onclick="onTdClicked(this, ${i + 1}, ${j + 1})"><div>${tdContent}</div></td>`
             }
         }
         strHTML += '</tr>'
     }
 
-    document.querySelector('.mult-table').style.backgroundImage = `url(img/${gSize}.jpg)`
+    document.querySelector('.mult-table-container').style.backgroundImage = `url(img/bg/${gSize}.jpg)`
     document.querySelector('.mult-table').innerHTML = strHTML
 }
 
@@ -106,7 +111,7 @@ function onTdClicked(elCell, x, y) {
     if (!gIsStarted) {
         gIsStarted = true
         gAudioBg = gAudioBgs[getRandomInt(0, gAudioBgs.length)]
-        gAudioBg.play()
+        // gAudioBg.play()
     }
 
     gElSelectedCell = elCell
@@ -132,7 +137,7 @@ function onAns() {
     } else {
         gAudioWrong.play()
         highlightEl(gElSelectedCell, 'wrong')
-        setTimeout(()=>{
+        setTimeout(() => {
             breakScreen()
         }, 1000)
     }
@@ -170,11 +175,11 @@ function checkGameOver() {
         clearInterval(gCandyInterval)
         gSize++
         localStorage.multSize = gSize
-        setTimeout(()=>{
+        setTimeout(() => {
             explodeScreen()
             setTimeout(onInit, 1000)
         }, 2500)
-        
+
         return true
     }
     return false
@@ -196,23 +201,30 @@ function breakScreen() {
     gAudioBreak.play()
     const el = document.querySelector('.broken')
     el.style.display = 'block'
-    setTimeout(()=>{
+    setTimeout(() => {
         el.style.display = 'none'
-    }, 2500) 
+    }, 2500)
 }
 
 function explodeScreen() {
     gAudioExplode.play()
     const el = document.querySelector('.explode')
     el.style.display = 'block'
-    setTimeout(()=>{
+    setTimeout(() => {
         el.style.display = 'none'
-    }, 2500) 
-    
+    }, 2500)
+
 }
 
 function onSelectLevel(val) {
     gSize = val
     gSolved = []
     onInit()
+}
+
+function hideSplash() {
+    const elSplash = document.querySelector('#splash-screen')
+    setTimeout(function () {
+        elSplash.classList.add('hide')
+    }, 1800)
 }

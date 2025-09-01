@@ -1,0 +1,14 @@
+
+*. Make the game always horizontal
+
+*. game mute
+
+*. Add setting page
+  -. board starter
+  -. auto select
+
+*. Add game mode: AutoSelect 
+   - Auto select cell for solving
+   -. Add a timer
+
+*. Add game mode: Balloon poping  

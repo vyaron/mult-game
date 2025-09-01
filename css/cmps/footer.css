@@ -1,0 +1,12 @@
+footer.app-footer {
+    /* padding: 2em; */
+    /* max-width: 500px; */
+    margin: auto;
+
+    .btn-restart {
+        border: 0;
+        background-color: rgba(10, 10, 10, .8);
+        color: whitesmoke;
+        cursor: crosshair;
+    }
+}

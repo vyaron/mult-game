@@ -4,14 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <!-- Force landscape orientation on supported mobile browsers -->
+    <meta name="screen-orientation" content="landscape">
+    <meta name="x5-orientation" content="landscape">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>אלופי הכפל</title>
     <link rel="stylesheet" href="css/main.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playpen+Sans+Hebrew:wght@100..800&family=Rubik+Beastly&family=Rubik+Burned&family=Rubik+Gemstones&display=swap"
+        rel="stylesheet">
+
 </head>
 
 <body onload="onInit()">
-    <h1>אלופי הכפל</h1>
-    <table>
+    <div id="splash-screen">
+        <div class="splash-content">
+            <img src="img/banner/banner2.webp" alt="Splash" class="splash-img" />
+            <h1>אלופי הכפל</h1>
+            <h2>המשחק לאלופים</h2>
+            <h3>כופלים ומרוויחים</h3>
+            <h4>בואו נשחק</h4>
+        </div>
+    </div>
+    <header>
+        <h1>אלופי הכפל</h1>
+    </header>
+    <table class="mult-table-container">
         <tbody class="mult-table"></tbody>
     </table>
     <dialog>
@@ -27,9 +49,9 @@
     <img src="img/broken.png" class="broken" />
     <img src="img/explode.gif" class="explode" />
 
-    <footer>
+    <footer class="app-footer">
         <button onclick="onRestart()" class="btn-restart">🗑</button>
-        <select onchange="onSelectLevel(+this.value)" >
+        <select onchange="onSelectLevel(+this.value)" name="level">
             <option>4</option>
             <option>5</option>
             <option>6</option>
@@ -39,10 +61,13 @@
             <option>10</option>
             <option>11</option>
         </select>
+
     </footer>
 
 
     <script src="js/main.js"></script>
+
+
 </body>
 
 </html>
