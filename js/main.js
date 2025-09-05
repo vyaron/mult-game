@@ -226,5 +226,5 @@ function hideSplash() {
     const elSplash = document.querySelector('#splash-screen')
     setTimeout(function () {
         elSplash.classList.add('hide')
-    }, 1800)
+    }, 3000)
 }
