@@ -48,22 +48,29 @@
     </dialog>
 
     <dialog class="settings">
+        <div>
+            <button class="btn btn-close" onclick="onCloseSettings()">X</button>
+        </div>
         <h2>הגדרות</h2>
-        <button onclick="onCloseSettings()">X</button>
-        <label>
-            רמת קושי:
-            <select onchange="onSelectLevel(+this.value)" name="level">
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-            </select>
-            <button onclick="onRestart()" class="btn-restart">🗑</button>
-        </label>
+        <div>
+            <label>
+                רמת קושי:
+                <select onchange="onSelectLevel(+this.value)" name="level">
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                </select>
+            </label>
+        </div>
+        <div>
+            <button onclick="onRestart()" class="btn btn-restart">🗑 אפס</button>
+            <button class="btn"onclick="onMute(this)"> 🔊 </button>
+        </div>
     </dialog>
 
     <img src="img/broken.png" class="broken" />
@@ -74,7 +81,9 @@
     </footer>
 
 
+    <script src="js/services/util.service.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/settings.js"></script>
 
 
 </body>

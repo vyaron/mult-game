@@ -8,6 +8,7 @@ body {
     min-height: 100vh;
     overflow-x: auto;
     padding: 1em;
+    direction: rtl;
 }
 
 /* Visually rotate the game in portrait mode on mobile */
@@ -27,3 +28,9 @@ body {
         align-items: center;
     }
 }
+
+    .btn {
+        border: 0;
+        background-color: rgba(10, 10, 10, .8);
+        color: whitesmoke;
+    }

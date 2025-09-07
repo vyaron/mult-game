@@ -1,6 +1,7 @@
 'use strict'
 
 var gSize = +localStorage.multSize || 4
+var gIsMuted = false
 var gIsStarted
 var gSolvedCount
 var gElSelectedCell
@@ -100,7 +101,7 @@ function onThClicked(elCell, i, j) {
     })
     elCell.classList.add('solved')
     if (openedElsCount) {
-        gAudioCheer.play()
+        !gIsMuted && gAudioCheer.play()
         checkGameOver()
     }
 }
@@ -111,7 +112,7 @@ function onTdClicked(elCell, x, y) {
     if (!gIsStarted) {
         gIsStarted = true
         gAudioBg = gAudioBgs[getRandomInt(0, gAudioBgs.length)]
-        // gAudioBg.play()
+        !gIsMuted && gAudioBg.play()
     }
 
     gElSelectedCell = elCell
@@ -130,13 +131,13 @@ function onAns() {
     const mult = elModal.querySelector('button').dataset.mult
 
     if (ans === mult) {
-        gAudioRights[getRandomInt(0, gAudioRights.length)].play()
+        !gIsMuted && gAudioRights[getRandomInt(0, gAudioRights.length)].play()
         gElSelectedCell.classList.add('solved')
         gElSelectedCell.innerHTML = ans
         saveProgress(ans)
 
     } else {
-        gAudioWrong.play()
+        !gIsMuted && gAudioWrong.play()
         highlightEl(gElSelectedCell, 'wrong')
         setTimeout(() => {
             breakScreen()
@@ -163,16 +164,10 @@ function highlightEl(el, className = 'highlight') {
 }
 
 
-function getRandomInt(min, max) {
-    const minCeiled = Math.ceil(min)
-    const maxFloored = Math.floor(max)
-    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)
-}
-
 function checkGameOver() {
     if (gSolvedCount === (gSize - 1) * (gSize - 1)) {
         gAudioBg.pause()
-        gAudioWin.play()
+        !gIsMuted && gAudioWin.play()
         clearInterval(gCandyInterval)
         gSize++
         localStorage.multSize = gSize
@@ -199,7 +194,7 @@ function saveProgress(ans) {
 }
 
 function breakScreen() {
-    gAudioBreak.play()
+    !gIsMuted && gAudioBreak.play()
     const el = document.querySelector('.broken')
     el.style.display = 'block'
     setTimeout(() => {
@@ -208,19 +203,13 @@ function breakScreen() {
 }
 
 function explodeScreen() {
-    gAudioExplode.play()
+    !gIsMuted && gAudioExplode.play()
     const el = document.querySelector('.explode')
     el.style.display = 'block'
     setTimeout(() => {
         el.style.display = 'none'
     }, 2500)
 
-}
-
-function onSelectLevel(val) {
-    gSize = val
-    gSolved = []
-    onInit()
 }
 
 function hideSplash() {
@@ -230,12 +219,3 @@ function hideSplash() {
     }, 3000)
 }
 
-function onShowSettings() {
-    const elModal = document.querySelector('dialog.settings')
-    elModal.showModal()
-}
-
-function onCloseSettings() {
-    const elModal = document.querySelector('dialog.settings')
-    elModal.close()
-}
