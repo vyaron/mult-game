@@ -37,7 +37,7 @@
     <table class="mult-table-container">
         <tbody class="mult-table"></tbody>
     </table>
-    <dialog>
+    <dialog class="ex">
         <form onsubmit="event.preventDefault();onAns()">
             <h2>
                 <span></span>
@@ -47,22 +47,30 @@
         </form>
     </dialog>
 
+    <dialog class="settings">
+        <h2>הגדרות</h2>
+        <button onclick="onCloseSettings()">X</button>
+        <label>
+            רמת קושי:
+            <select onchange="onSelectLevel(+this.value)" name="level">
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+            </select>
+            <button onclick="onRestart()" class="btn-restart">🗑</button>
+        </label>
+    </dialog>
+
     <img src="img/broken.png" class="broken" />
     <img src="img/explode.gif" class="explode" />
 
     <footer class="app-footer">
-        <button onclick="onRestart()" class="btn-restart">🗑</button>
-        <select onchange="onSelectLevel(+this.value)" name="level">
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-            <option>11</option>
-        </select>
-
+        <button onclick="onShowSettings()" class="btn">⚙️</button>
     </footer>
 
 

@@ -115,7 +115,7 @@ function onTdClicked(elCell, x, y) {
     }
 
     gElSelectedCell = elCell
-    const elModal = document.querySelector('dialog')
+    const elModal = document.querySelector('dialog.ex')
     elModal.querySelector('h2 span').innerText = `${x} * ${y} =`
     elModal.querySelector('input').value = ''
     elModal.querySelector('button').dataset.mult = x * y
@@ -123,8 +123,9 @@ function onTdClicked(elCell, x, y) {
     elModal.showModal()
 }
 
+
 function onAns() {
-    const elModal = document.querySelector('dialog')
+    const elModal = document.querySelector('dialog.ex')
     const ans = elModal.querySelector('input').value
     const mult = elModal.querySelector('button').dataset.mult
 
@@ -227,4 +228,14 @@ function hideSplash() {
     setTimeout(function () {
         elSplash.classList.add('hide')
     }, 3000)
+}
+
+function onShowSettings() {
+    const elModal = document.querySelector('dialog.settings')
+    elModal.showModal()
+}
+
+function onCloseSettings() {
+    const elModal = document.querySelector('dialog.settings')
+    elModal.close()
 }
