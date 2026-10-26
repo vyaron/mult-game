@@ -1,12 +1,13 @@
 'use strict'
 
 var gSize = +localStorage.multSize || 4
+var gIsMuted = false
 var gIsStarted
 var gSolvedCount
 var gElSelectedCell
 var gCandyInterval
 var gAudioBg
-var gIsMuted = localStorage.isMuted === 'true'
+gIsMuted = localStorage.isMuted === 'true'
 var gSolved = JSON.parse(localStorage.solved || '[]')
 
 const gAudioRights = [new Audio('sound/right1.mp3'), new Audio('sound/right2.mp3'), new Audio('sound/right3.mp3')]
@@ -31,7 +32,12 @@ function onInit() {
         if (gCandyInterval) clearInterval(gCandyInterval)
         gCandyInterval = setInterval(placeCandy, 7000)
     }
+
+    hideSplash()
+
 }
+
+
 
 function placeCandy() {
     const els = [...document.querySelectorAll('th:not(.solved)')]
@@ -63,14 +69,14 @@ function renderTable() {
                     gSolved.splice(idx, 1)
                     className = 'solved'
                     tdContent = num
-                }                
+                }
                 strHTML += `<td  style="width:${cellWidth}%" class="${className}" data-diagonal="${i === j}" data-i="${i}" data-j="${j}" onclick="onTdClicked(this, ${i + 1}, ${j + 1})"><div>${tdContent}</div></td>`
             }
         }
         strHTML += '</tr>'
     }
 
-    document.querySelector('.mult-table').style.backgroundImage = `url(img/${gSize}.jpg)`
+    document.querySelector('.mult-table-container').style.backgroundImage = `url(img/bg/${gSize}.jpg)`
     document.querySelector('.mult-table').innerHTML = strHTML
 }
 
@@ -98,7 +104,7 @@ function onThClicked(elCell, i, j) {
     })
     elCell.classList.add('solved')
     if (openedElsCount) {
-        gAudioCheer.play()
+        !gIsMuted && gAudioCheer.play()
         checkGameOver()
     }
 }
@@ -109,11 +115,11 @@ function onTdClicked(elCell, x, y) {
     if (!gIsStarted) {
         gIsStarted = true
         gAudioBg = gAudioBgs[getRandomInt(0, gAudioBgs.length)]
-        gAudioBg.play()
+        !gIsMuted && gAudioBg.play()
     }
 
     gElSelectedCell = elCell
-    const elModal = document.querySelector('dialog')
+    const elModal = document.querySelector('dialog.ex')
     elModal.querySelector('h2 span').innerText = `${x} * ${y} =`
     elModal.querySelector('input').value = ''
     elModal.querySelector('button').dataset.mult = x * y
@@ -121,21 +127,22 @@ function onTdClicked(elCell, x, y) {
     elModal.showModal()
 }
 
+
 function onAns() {
-    const elModal = document.querySelector('dialog')
+    const elModal = document.querySelector('dialog.ex')
     const ans = elModal.querySelector('input').value
     const mult = elModal.querySelector('button').dataset.mult
 
     if (ans === mult) {
-        gAudioRights[getRandomInt(0, gAudioRights.length)].play()
+        !gIsMuted && gAudioRights[getRandomInt(0, gAudioRights.length)].play()
         gElSelectedCell.classList.add('solved')
         gElSelectedCell.innerHTML = ans
         saveProgress(ans)
 
     } else {
-        gAudioWrong.play()
+        !gIsMuted && gAudioWrong.play()
         highlightEl(gElSelectedCell, 'wrong')
-        setTimeout(()=>{
+        setTimeout(() => {
             breakScreen()
         }, 1000)
     }
@@ -161,24 +168,18 @@ function highlightEl(el, className = 'highlight') {
 }
 
 
-function getRandomInt(min, max) {
-    const minCeiled = Math.ceil(min)
-    const maxFloored = Math.floor(max)
-    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled)
-}
-
 function checkGameOver() {
     if (gSolvedCount === (gSize - 1) * (gSize - 1)) {
         gAudioBg.pause()
-        gAudioWin.play()
+        !gIsMuted && gAudioWin.play()
         clearInterval(gCandyInterval)
         gSize++
         localStorage.multSize = gSize
-        setTimeout(()=>{
+        setTimeout(() => {
             explodeScreen()
             setTimeout(onInit, 1000)
         }, 2500)
-        
+
         return true
     }
     return false
@@ -197,35 +198,29 @@ function saveProgress(ans) {
 }
 
 function breakScreen() {
-    gAudioBreak.play()
+    !gIsMuted && gAudioBreak.play()
     const el = document.querySelector('.broken')
     el.style.display = 'block'
-    setTimeout(()=>{
+    setTimeout(() => {
         el.style.display = 'none'
-    }, 2500) 
+    }, 2500)
 }
 
 function explodeScreen() {
-    gAudioExplode.play()
+    !gIsMuted && gAudioExplode.play()
     const el = document.querySelector('.explode')
     el.style.display = 'block'
-    setTimeout(()=>{
+    setTimeout(() => {
         el.style.display = 'none'
-    }, 2500) 
-    
+    }, 2500)
+
 }
 
-function onSelectLevel(val) {
-    gSize = val
-    gSolved = []
-    onInit()
-}
-
-function onToggleMute() {
-    gIsMuted = !gIsMuted
-    localStorage.isMuted = gIsMuted
-    setAudioMuted(gIsMuted)
-    renderMuteBtn()
+function hideSplash() {
+    const elSplash = document.querySelector('#splash-screen')
+    setTimeout(function () {
+        elSplash.classList.add('hide')
+    }, 3000)
 }
 
 function setAudioMuted(isMuted) {
