@@ -1,8 +1,22 @@
-header {
-     h1 {
-        margin: 0;
-        font-family: "Rubik Beastly", system-ui;
-        font-weight: 400;
-        font-style: normal;
-    }
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 0 auto 0.5rem;
+    max-width: 94vw;
+}
+
+.app-header h1 {
+    margin: 0;
+    font-family: "Rubik Beastly", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.1;
+}
+
+.btn-settings {
+    border-radius: 0.4em;
+    padding: 0.15em 0.5em;
+    cursor: pointer;
 }

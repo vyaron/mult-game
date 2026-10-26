@@ -1,8 +1,10 @@
 table.mult-table-container {
     margin: auto;
     border-collapse: collapse;
-    width: 94vw;
-    min-height: 70vh;
+    width: min(94vw, 900px);
+    height: min(78dvh, calc(100dvh - 90px));
+    max-height: calc(100dvh - 90px);
+    table-layout: fixed;
     background-repeat: no-repeat;
     background-size: cover
 }
@@ -11,10 +13,9 @@ table.mult-table-container {
 td,
 th {
     border: 1px solid black;
-    padding: .3em;
-    /* width: 5vw; */
-    /* height: 1vh; */
+    padding: clamp(0.1rem, 0.4vw, 0.3rem);
     transition: .5s;
+    font-size: clamp(0.8rem, 2vw, 1rem);
 }
 
 th {
@@ -65,4 +66,3 @@ dialog input {
 dialog input:focus {
     background-color: lightcoral;
 }
-
