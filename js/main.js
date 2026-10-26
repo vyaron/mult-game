@@ -1,13 +1,13 @@
 'use strict'
 
 var gSize = +localStorage.multSize || 4
-var gIsMuted = false
+var gIsBgMuted = localStorage.isBgMuted === 'true'
+var gIsActionMuted = localStorage.isActionMuted === 'true'
 var gIsStarted
 var gSolvedCount
 var gElSelectedCell
 var gCandyInterval
 var gAudioBg
-gIsMuted = localStorage.isMuted === 'true'
 var gSolved = JSON.parse(localStorage.solved || '[]')
 
 const gAudioRights = [new Audio('sound/right1.mp3'), new Audio('sound/right2.mp3'), new Audio('sound/right3.mp3')]
@@ -26,8 +26,8 @@ function onInit() {
     gIsStarted = false
 
     renderTable()
-    setAudioMuted(gIsMuted)
-    renderMuteBtn()
+    setAudioPreferences()
+    renderMuteBtns()
     if (gSize > 6) {
         if (gCandyInterval) clearInterval(gCandyInterval)
         gCandyInterval = setInterval(placeCandy, 7000)
@@ -104,7 +104,7 @@ function onThClicked(elCell, i, j) {
     })
     elCell.classList.add('solved')
     if (openedElsCount) {
-        !gIsMuted && gAudioCheer.play()
+        !gIsActionMuted && gAudioCheer.play()
         checkGameOver()
     }
 }
@@ -115,7 +115,7 @@ function onTdClicked(elCell, x, y) {
     if (!gIsStarted) {
         gIsStarted = true
         gAudioBg = gAudioBgs[getRandomInt(0, gAudioBgs.length)]
-        !gIsMuted && gAudioBg.play()
+        if (!gIsBgMuted) gAudioBg.play()
     }
 
     gElSelectedCell = elCell
@@ -134,13 +134,13 @@ function onAns() {
     const mult = elModal.querySelector('button').dataset.mult
 
     if (ans === mult) {
-        !gIsMuted && gAudioRights[getRandomInt(0, gAudioRights.length)].play()
+        !gIsActionMuted && gAudioRights[getRandomInt(0, gAudioRights.length)].play()
         gElSelectedCell.classList.add('solved')
         gElSelectedCell.innerHTML = ans
         saveProgress(ans)
 
     } else {
-        !gIsMuted && gAudioWrong.play()
+        !gIsActionMuted && gAudioWrong.play()
         highlightEl(gElSelectedCell, 'wrong')
         setTimeout(() => {
             breakScreen()
@@ -155,7 +155,8 @@ function onRestart() {
     localStorage.clear()
     gSize = 4
     gSolved = []
-    gIsMuted = false
+    gIsBgMuted = false
+    gIsActionMuted = false
     onInit()
 }
 
@@ -171,7 +172,7 @@ function highlightEl(el, className = 'highlight') {
 function checkGameOver() {
     if (gSolvedCount === (gSize - 1) * (gSize - 1)) {
         gAudioBg.pause()
-        !gIsMuted && gAudioWin.play()
+        !gIsActionMuted && gAudioWin.play()
         clearInterval(gCandyInterval)
         gSize++
         localStorage.multSize = gSize
@@ -198,7 +199,7 @@ function saveProgress(ans) {
 }
 
 function breakScreen() {
-    !gIsMuted && gAudioBreak.play()
+    !gIsActionMuted && gAudioBreak.play()
     const el = document.querySelector('.broken')
     el.style.display = 'block'
     setTimeout(() => {
@@ -207,7 +208,7 @@ function breakScreen() {
 }
 
 function explodeScreen() {
-    !gIsMuted && gAudioExplode.play()
+    !gIsActionMuted && gAudioExplode.play()
     const el = document.querySelector('.explode')
     el.style.display = 'block'
     setTimeout(() => {
@@ -223,14 +224,17 @@ function hideSplash() {
     }, 3000)
 }
 
-function setAudioMuted(isMuted) {
-    const audios = [...gAudioRights, gAudioWrong, gAudioWin, gAudioCheer, gAudioBreak, gAudioExplode, ...gAudioBgs]
-    audios.forEach(audio => audio.muted = isMuted)
+function setAudioPreferences() {
+    gAudioBgs.forEach(audio => audio.muted = gIsBgMuted)
+
+    const actionAudios = [...gAudioRights, gAudioWrong, gAudioWin, gAudioCheer, gAudioBreak, gAudioExplode]
+    actionAudios.forEach(audio => audio.muted = gIsActionMuted)
 }
 
-function renderMuteBtn() {
-    const elBtn = document.querySelector('.btn-mute')
-    if (!elBtn) return
+function renderMuteBtns() {
+    const elBgBtn = document.querySelector('.btn-mute-bg')
+    const elActionBtn = document.querySelector('.btn-mute-action')
 
-    elBtn.innerText = gIsMuted ? '🔇' : '🔊'
+    if (elBgBtn) elBgBtn.innerText = gIsBgMuted ? '🎵 🔇' : '🎵 🔊'
+    if (elActionBtn) elActionBtn.innerText = gIsActionMuted ? '🎯 🔇' : '🎯 🔊'
 }

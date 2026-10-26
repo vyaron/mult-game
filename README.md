@@ -1,3 +1,5 @@
 Live at https://vyaron.github.io/mult-game/
 
-Use the speaker button (🔊/🔇) in the footer to mute or unmute game sounds.
+Use Settings (⚙️) to control sound:
+- 🎵 toggle background music on/off
+- 🎯 toggle action/effect sounds on/off

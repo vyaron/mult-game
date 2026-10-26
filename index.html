@@ -10,6 +10,8 @@
     <meta name="x5-orientation" content="landscape">
     <meta name="mobile-web-app-capable" content="yes">
     <title>אלופי הכפל</title>
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg?v=1">
+    <link rel="shortcut icon" href="img/favicon.svg?v=1">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/main.css">
 
@@ -69,7 +71,8 @@
         </div>
         <div>
             <button onclick="onRestart()" class="btn btn-restart">🗑 אפס</button>
-            <button class="btn btn-mute" onclick="onMute(this)">🔊</button>
+            <button class="btn btn-mute-bg" onclick="onMute('bg')">🎵 🔊</button>
+            <button class="btn btn-mute-action" onclick="onMute('action')">🎯 🔊</button>
         </div>
     </dialog>
 

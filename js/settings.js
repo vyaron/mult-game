@@ -14,9 +14,19 @@ function onSelectLevel(val) {
     onInit()
 }
 
-function onMute(elBtn) {
-    gIsMuted = !gIsMuted
-    localStorage.isMuted = gIsMuted
-    setAudioMuted(gIsMuted)
-    renderMuteBtn()
+function onMute(type) {
+    if (type === 'bg') {
+        gIsBgMuted = !gIsBgMuted
+        localStorage.isBgMuted = gIsBgMuted
+    } else {
+        gIsActionMuted = !gIsActionMuted
+        localStorage.isActionMuted = gIsActionMuted
+    }
+
+    setAudioPreferences()
+    renderMuteBtns()
+
+    if (!gAudioBg) return
+    if (gIsBgMuted) gAudioBg.pause()
+    else if (gIsStarted) gAudioBg.play()
 }
