@@ -4,25 +4,35 @@ body {
     color: whitesmoke;
     font-family: cursive;
     user-select: none;
+    margin: 0;
+    padding: 0.25rem 0.75rem 1.5rem;
+}
+
+h1 {
+    margin: 0 0 0.6rem;
 }
 
 table {
     margin: auto;
     border-collapse: collapse;
+    width: min(100%, 720px);
+    table-layout: fixed;
 }
 
 .mult-table {
     background-repeat: no-repeat;
     background-size: contain;
+    background-position: center;
 }
 
 td,
 th {
     border: 1px solid black;
-    padding: .3em;
-    width: 40px;
-    height: 40px;
+    padding: .25em;
+    width: clamp(28px, 8.3vw, 56px);
+    height: clamp(28px, 8.3vw, 56px);
     transition: .5s;
+    overflow: hidden;
 }
 
 th {
@@ -61,16 +71,17 @@ td {
 dialog {
     border: 1px solid gray;
     border-radius: .3em;
+    width: min(92vw, 420px);
 }
 
 dialog h2 {
-    font-size: 2em;
+    font-size: clamp(1.5rem, 6vw, 2rem);
     color: magenta
 }
 
 dialog input {
-    font-size: 1.3em;
-    max-width: 50px;
+    font-size: clamp(1rem, 4vw, 1.3rem);
+    width: clamp(60px, 18vw, 90px);
     color: magenta;
     font-size: bold;
     transition: .8s;
@@ -90,8 +101,13 @@ dialog input:focus {
 }
 
 footer {
-    margin-top: 3em;
-    max-width: 500px;
+    margin: 1.25rem auto 0;
+    max-width: 720px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
 .btn-restart {
@@ -99,15 +115,45 @@ footer {
     border-radius: 50%;
     background-color: rgba(10, 10, 10, .8);
     color: whitesmoke;
-    float: right;
+    width: 42px;
+    height: 42px;
     cursor: crosshair;
+}
+
+.btn-mute {
+    border: 0;
+    border-radius: 50%;
+    background-color: rgba(10, 10, 10, .8);
+    color: whitesmoke;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
 }
 
 .broken, .explode {
     display: none;
-    width: 400px;
-    margin: auto;
-    position: absolute;
-    top: 0;
-    left: 25%
+    width: min(92vw, 400px);
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 0.1rem;
+    }
+
+    td,
+    th {
+        width: clamp(24px, 8vw, 34px);
+        height: clamp(24px, 8vw, 34px);
+        padding: 0.15em;
+        font-size: 0.9rem;
+    }
+
+    footer {
+        gap: 0.5rem;
+    }
 }

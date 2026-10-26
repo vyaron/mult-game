@@ -6,6 +6,7 @@ var gSolvedCount
 var gElSelectedCell
 var gCandyInterval
 var gAudioBg
+var gIsMuted = localStorage.isMuted === 'true'
 var gSolved = JSON.parse(localStorage.solved || '[]')
 
 const gAudioRights = [new Audio('sound/right1.mp3'), new Audio('sound/right2.mp3'), new Audio('sound/right3.mp3')]
@@ -24,6 +25,8 @@ function onInit() {
     gIsStarted = false
 
     renderTable()
+    setAudioMuted(gIsMuted)
+    renderMuteBtn()
     if (gSize > 6) {
         if (gCandyInterval) clearInterval(gCandyInterval)
         gCandyInterval = setInterval(placeCandy, 7000)
@@ -145,6 +148,7 @@ function onRestart() {
     localStorage.clear()
     gSize = 4
     gSolved = []
+    gIsMuted = false
     onInit()
 }
 
@@ -215,4 +219,23 @@ function onSelectLevel(val) {
     gSize = val
     gSolved = []
     onInit()
+}
+
+function onToggleMute() {
+    gIsMuted = !gIsMuted
+    localStorage.isMuted = gIsMuted
+    setAudioMuted(gIsMuted)
+    renderMuteBtn()
+}
+
+function setAudioMuted(isMuted) {
+    const audios = [...gAudioRights, gAudioWrong, gAudioWin, gAudioCheer, gAudioBreak, gAudioExplode, ...gAudioBgs]
+    audios.forEach(audio => audio.muted = isMuted)
+}
+
+function renderMuteBtn() {
+    const elBtn = document.querySelector('.btn-mute')
+    if (!elBtn) return
+
+    elBtn.innerText = gIsMuted ? '🔇' : '🔊'
 }
